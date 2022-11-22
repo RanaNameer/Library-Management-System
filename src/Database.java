@@ -7,10 +7,11 @@ public class Database {
     public static void create() throws SQLException {
         try {
             Connection connection = Connect.connect();
+            assert connection != null;
             ResultSet resultSet = connection.getMetaData().getCatalogs();
             while (resultSet.next()) {
                 String databaseName = resultSet.getString(1);
-                if (databaseName.equals("library")) {
+                if (databaseName.equalsIgnoreCase("library")) {
                     Statement stmt = connection.createStatement();
                     String sql = "DROP DATABASE library";
                     stmt.executeUpdate(sql);
@@ -30,6 +31,5 @@ public class Database {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
 }
